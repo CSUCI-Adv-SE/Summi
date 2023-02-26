@@ -9,6 +9,8 @@ from summI.settings import MEDIA_PATH, MEDIA_URL
 from .constants import *
 from PIL import Image
 
+from .summi_ocr import recognize_text
+
 # logging
 logger = logging.getLogger("django")
 
@@ -92,33 +94,37 @@ def UserUploadedFilesView(request):
             })
 
 
-# @csrf_exempt
-# @api_view(["POST"])
-# def GetUserUploadedFileView(request):
-#     if request.method == "POST":
-#         try:
-#             image_uuid = request.POST.get('image_uuid', None)
+@csrf_exempt
+@api_view(["POST"])
+def GetUserUploadedFileView(request):
+    if request.method == "POST":
+        try:
+            image_uuid = request.POST.get('image_uuid', None)
 
-#             if image_uuid is None:
-#                 return JsonResponse({
-#                     "status": 300,
-#                     "message": "Missing Image ID"
-#                 })
+            if image_uuid is None:
+                return JsonResponse({
+                    "status": 300,
+                    "message": "Missing Image ID"
+                })
 
-#             user_uploaded_file_obj = UserUploadedFiles.objects.filter(uuid=image_uuid).first()
-
-#             if not user_uploaded_file_obj:
-#                 return JsonResponse({
-#                     "status": 301,
-#                     "message": "Invalid Image ID"
-#                 })
+            user_uploaded_file_obj = UserUploadedFiles.objects.filter(uuid=image_uuid).first()
             
-#             return JsonResponse({
-#                 "status": 200,
-#                 "message": "success",
-#                 "image_url": MEDIA_URL + str(user_uploaded_file_obj.uuid) + "/" + str(user_uploaded_file_obj.file_name),
-#             })
+            resp = recognize_text(uploaded_file_object.file_path)
+            
+            if not user_uploaded_file_obj:
+                return JsonResponse({
+                    "status": 301,
+                    "message": "Invalid Image ID"
+                })
+            
+            
+            if len(resp):
+                return JsonResponse({
+                    "status": 200,
+                    "message": resp,
+                    "image_url": MEDIA_URL + str(user_uploaded_file_obj.uuid) + "/" + str(user_uploaded_file_obj.file_name),
+            })
 
             
-#         except Exception as e:
-#             logger.error(str(e))
+        except Exception as e:
+            logger.error(str(e))
