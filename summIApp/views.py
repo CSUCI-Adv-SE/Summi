@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 import logging
 from .utils import *
-from summI.settings import MEDIA_PATH, MEDIA_URL
+from summI.settings import MEDIA_PATH, MEDIA_URL, BASE_DIR
 from .constants import *
 from PIL import Image
 
@@ -105,20 +105,37 @@ def UserUploadedFilesView(request):
 #                     "message": "Missing Image ID"
 #                 })
 
-#             user_uploaded_file_obj = UserUploadedFiles.objects.filter(uuid=image_uuid).first()
+#             user = request.user
+#             is_public_file = True
+
+#             if user.is_authenticated:
+#                 is_public_file = False
+
+#             user_uploaded_file_obj = UserUploadedFiles.objects.filter(uuid=image_uuid, is_public_file=is_public_file).first()
 
 #             if not user_uploaded_file_obj:
 #                 return JsonResponse({
 #                     "status": 301,
 #                     "message": "Invalid Image ID"
 #                 })
-            
+
+#             file_path = MEDIA_URL + str(user_uploaded_file_obj.uuid) + "/" + str(user_uploaded_file_obj.file_name)
+
+#             if not os.path.exists(user_uploaded_file_obj.file_path):
+#                 return JsonResponse({
+#                     "status": 302,
+#                     "message": "File missing!"
+#                 })
+
 #             return JsonResponse({
 #                 "status": 200,
 #                 "message": "success",
-#                 "image_url": MEDIA_URL + str(user_uploaded_file_obj.uuid) + "/" + str(user_uploaded_file_obj.file_name),
+#                 "file_path": file_path,
 #             })
 
-            
 #         except Exception as e:
 #             logger.error(str(e))
+#             return JsonResponse({
+#                 "status": 500,
+#                 "message": str(e),
+#             })
