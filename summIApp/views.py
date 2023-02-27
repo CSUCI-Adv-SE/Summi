@@ -9,6 +9,8 @@ from summI.settings import MEDIA_PATH, MEDIA_URL, BASE_DIR
 from .constants import *
 from PIL import Image
 
+from .summi_ocr import recognize_text
+
 # logging
 logger = logging.getLogger("django")
 
