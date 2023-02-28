@@ -79,7 +79,6 @@ python-decouple==3.7
 python-json-logger==2.0.7
 pytz==2022.7.1
 PyWavelets==1.4.1
-pywinpty==2.0.10
 PyYAML==6.0
 pyzmq==25.0.0
 requests==2.28.2
@@ -99,8 +98,6 @@ stack-data==0.6.2
 terminado==0.17.1
 tifffile==2023.2.3
 tinycss2==1.2.1
-toml==0.10.2
-torch==1.13.1
 torchvision==0.14.1
 tornado==6.2
 traitlets==5.9.0

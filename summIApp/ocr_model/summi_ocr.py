@@ -1,4 +1,4 @@
-import easyocr
+# import easyocr
 import PIL
 import os
 import logging
@@ -16,7 +16,7 @@ def recognize_text(uploaded_image):
         image_path = os.path.join(image.filename)
 
         # Initialize EasyOCR reader
-        reader = easyocr.Reader(['en'])
+        #reader = easyocr.Reader(['en'])
 
         # Use the reader to detect the text in the photo
         result = reader.readtext(image_path)

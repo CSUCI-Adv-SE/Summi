@@ -1,0 +1,115 @@
+2023-02-27 01:00:02,722 django       ERROR    'uploaded_file'
+2023-02-27 01:00:07,813 django       ERROR    'uploaded_file'
+2023-02-27 01:03:46,877 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-02-27 01:03:46,879 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-02-27 01:03:46,879 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-02-27 01:03:46,879 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-02-27 01:03:46,879 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-02-27 01:03:46,879 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-02-27 01:03:46,885 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 01:29:01,048 django       ERROR    'uploaded_file'
+2023-02-27 02:15:13,025 django       ERROR    'uploaded_file'
+2023-02-27 02:22:10,446 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-02-27 02:22:10,448 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-02-27 02:22:10,448 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-02-27 02:22:10,448 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-02-27 02:22:10,448 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-02-27 02:22:10,448 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-02-27 02:22:10,454 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 03:23:58,949 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 06:15:43,786 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 06:18:22,391 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 06:30:46,865 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 06:37:28,600 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 06:38:23,843 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 06:39:31,535 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 07:09:08,583 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 07:10:26,907 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-02-27 07:10:26,908 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-02-27 07:10:26,908 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-02-27 07:10:26,908 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-02-27 07:10:26,908 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-02-27 07:10:26,908 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-02-27 07:10:26,911 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 07:11:29,075 django.utils.autoreload INFO     /Users/huminrui/Desktop/Summi/summI/settings.py changed, reloading.
+2023-02-27 07:11:29,360 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 07:12:28,932 django.utils.autoreload INFO     /Users/huminrui/Desktop/Summi/summI/settings.py changed, reloading.
+2023-02-27 07:12:29,193 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 07:12:58,693 PIL.TiffImagePlugin DEBUG    tag: Orientation (274) - type: short (3) - value: b'\x00\x01'
+2023-02-27 07:12:58,694 PIL.TiffImagePlugin DEBUG    tag: ExifIFD (34665) - type: long (4) - value: b'\x00\x00\x00&'
+2023-02-27 07:12:58,698 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 07:14:26,003 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 07:17:26,711 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 07:17:53,410 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-02-27 07:17:53,411 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-02-27 07:17:53,411 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-02-27 07:17:53,411 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-02-27 07:17:53,411 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-02-27 07:17:53,411 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-02-27 07:17:53,414 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 07:21:05,727 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 07:28:39,088 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 07:29:32,004 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-02-27 07:29:32,005 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-02-27 07:29:32,005 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-02-27 07:29:32,005 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-02-27 07:29:32,005 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-02-27 07:29:32,005 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-02-27 07:29:32,009 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 07:30:06,438 PIL.TiffImagePlugin DEBUG    tag: Orientation (274) - type: short (3) - value: b'\x00\x01'
+2023-02-27 07:30:06,438 PIL.TiffImagePlugin DEBUG    tag: ExifIFD (34665) - type: long (4) - value: b'\x00\x00\x00&'
+2023-02-27 07:30:06,444 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 07:31:40,697 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-02-27 07:31:40,697 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-02-27 07:31:40,697 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-02-27 07:31:40,697 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-02-27 07:31:40,697 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-02-27 07:31:40,698 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-02-27 07:31:40,702 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 07:38:20,330 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 07:38:38,156 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-02-27 07:38:38,156 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-02-27 07:38:38,156 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-02-27 07:38:38,156 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-02-27 07:38:38,156 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-02-27 07:38:38,156 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-02-27 07:38:38,162 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 14:27:05,497 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-02-27 14:27:05,498 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-02-27 14:27:05,498 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-02-27 14:27:05,498 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-02-27 14:27:05,498 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-02-27 14:27:05,498 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-02-27 14:27:05,504 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-02-27 15:07:00,417 django.security.DisallowedHost ERROR    Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/utils/deprecation.py", line 135, in __call__
+    response = self.process_request(request)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/http/request.py", line 148, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+2023-02-27 15:07:00,458 django.request WARNING  Bad Request: /
+2023-02-27 15:07:00,546 django.security.DisallowedHost ERROR    Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/utils/deprecation.py", line 135, in __call__
+    response = self.process_request(request)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/http/request.py", line 148, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+2023-02-27 15:07:00,563 django.request WARNING  Bad Request: /favicon.ico
+2023-02-27 19:40:30,297 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-02-27 19:42:28,953 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-02-27 19:42:28,954 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-02-27 19:42:28,954 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-02-27 19:42:28,954 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-02-27 19:42:28,954 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-02-27 19:42:28,954 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-02-27 19:42:28,961 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
