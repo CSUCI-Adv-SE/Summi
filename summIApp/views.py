@@ -33,13 +33,18 @@ def UserUploadedFilesView(request):
                     "message": f"file size cannot be higher than {max_file_size//1024**2} MB",
                 })
 
-            is_valid_file = validate_file(uploaded_file.file)
-
-            if not is_valid_file:
+            #is_valid_file = validate_file(uploaded_file.file)
+            if not validate_file(uploaded_file.file):
                 return JsonResponse({
                     "status": 300,
                     "message": "file format not supported",
                 })
+            # why this again?
+            # if not is_valid_file:
+            #     return JsonResponse({
+            #         "status": 300,
+            #         "message": "file format not supported",
+            #     })
 
             file_name = strip_html(uploaded_file.name)
 
@@ -94,39 +99,6 @@ def UserUploadedFilesView(request):
                 "message": str(e),
             })
 
-
-# @csrf_exempt
-# @api_view(["POST"])
-# def GetUserUploadedFileView(request):
-#     if request.method == "POST":
-#         try:
-#             image_uuid = request.POST.get('image_uuid', None)
-
-#             if image_uuid is None:
-#                 return JsonResponse({
-#                     "status": 300,
-#                     "message": "Missing Image ID"
-#                 })
-
-#             user_uploaded_file_obj = UserUploadedFiles.objects.filter(uuid=image_uuid).first()
-
-#             if not user_uploaded_file_obj:
-#                 return JsonResponse({
-#                     "status": 301,
-#                     "message": "Invalid Image ID"
-#                 })
-            
-#             return JsonResponse({
-#                 "status": 200,
-#                 "message": "success",
-#                 "image_url": MEDIA_URL + str(user_uploaded_file_obj.uuid) + "/" + str(user_uploaded_file_obj.file_name),
-#             })
-
-            
-#         except Exception as e:
-#             logger.error(str(e))
-
-
 @csrf_exempt
 @api_view(["POST"])
 def GetSummarisedTextView(request):
@@ -141,7 +113,7 @@ def GetSummarisedTextView(request):
                 })
 
             user_uploaded_file_obj = UserUploadedFiles.objects.filter(uuid=image_uuid).first()
-            
+
             if not user_uploaded_file_obj:
                 return JsonResponse({
                     "status": 301,
@@ -149,7 +121,7 @@ def GetSummarisedTextView(request):
                 })
 
             detected_text = recognize_text(user_uploaded_file_obj.file_path)
-            
+
             if len(detected_text):
                 return JsonResponse({
                     "status": 200,
@@ -161,7 +133,7 @@ def GetSummarisedTextView(request):
                 "message": "Empty file or empty text detected"
             })
 
-            
+
         except Exception as e:
             logger.error(str(e))
             return JsonResponse({
