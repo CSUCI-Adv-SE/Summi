@@ -1,4 +1,13 @@
-FROM python:3.10-slim-buster
+FROM ubuntu:latest
+
+RUN apt-get update && apt upgrade -y
+
+RUN apt install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa && apt install python3.10 python3-pip -y
+
+RUN apt install tesseract-ocr -y
+
+RUN apt-get install --reinstall libpq-dev -y
+
 
 
 COPY . summI
