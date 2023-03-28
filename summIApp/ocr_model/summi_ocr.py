@@ -3,9 +3,9 @@ from PIL import Image
 import logging
 import os
 
-tess.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+# tess.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
-def recognized_text(uploaded_image):
+def recognize_text(uploaded_image):
     text = ""
     try:
         img = Image.open(uploaded_image)

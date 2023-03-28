@@ -18,6 +18,8 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip3 install -r requirements.txt --no-cache-dir
 
+ENV PATH="${PATH}:/usr/bin/tesseract"
+
 
 # RUN addgroup --gid 1001 --system app && \
 #     adduser --no-create-home --shell /bin/false --disabled-password --uid 1001 --system --group app
