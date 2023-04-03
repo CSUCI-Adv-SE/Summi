@@ -8,6 +8,8 @@ Django==4.1.7
 django-request-logging==0.7.5
 djangorestframework==3.14.0
 django-cors-headers==3.14.0
+easyocr==1.6.2
+google-cloud-vision==3.4.0
 MarkupSafe==2.1.2
 packaging==23.0
 pathvalidate==2.5.2

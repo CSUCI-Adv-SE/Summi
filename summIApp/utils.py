@@ -5,6 +5,8 @@ from uuid import uuid4
 from .constants import *
 import traceback
 from summI.settings import BASE_DIR
+from .ocr_model.summi_ocr import recognize_text
+from .ocr_api import recognize_text_api
 
 logger = logging.getLogger("django")
 
@@ -32,3 +34,14 @@ def convert_to_png(uploaded_file, file_path):
     except Exception as e:
         logger.error(traceback.format_exc())
     return None
+
+
+def recognize_text_wrapper(file_path):
+    try:
+        if USE_OCR_APIs:
+            return recognize_text_api(file_path)
+        else:
+            return recognize_text(file_path)
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return
