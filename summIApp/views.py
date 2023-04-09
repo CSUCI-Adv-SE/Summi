@@ -9,6 +9,7 @@ from summI.settings import MEDIA_PATH, MEDIA_URL
 from .constants import *
 from PIL import Image
 import re
+from django.shortcuts import redirect, render
 
 
 # logging
@@ -186,3 +187,15 @@ def GetSummarisedTextView(request):
                 "status": 500,
                 "message": str(e),
             })
+
+def registerView(request):
+    context = {}
+    return render(request, '', context)
+
+def loginView(request):
+    context = {}
+    return render(request, '', context)
+
+def logoutView(request):
+    context = {}
+    return render(request, '', context)
