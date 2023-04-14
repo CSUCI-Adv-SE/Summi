@@ -9,6 +9,9 @@ from summI.settings import MEDIA_PATH, MEDIA_URL
 from .constants import *
 from PIL import Image
 import re
+from .sum_api import *
+from .imgbb.upload_file import imgbb_upload
+from .imgbb.download_file import imgbb_download_file
 from django.shortcuts import redirect, render
 
 
@@ -33,6 +36,7 @@ def UserUploadedFilesView(request):
                     "message": f"file size cannot be higher than {max_file_size//1024**2} MB",
                 })
 
+            file_contents = uploaded_file.file.read()
             is_valid_file = validate_file(uploaded_file.file)
 
             if not is_valid_file:
@@ -58,53 +62,75 @@ def UserUploadedFilesView(request):
 
             uploaded_file_object = UserUploadedFiles.objects.create(
                 user=user, file_name=file_name, is_public_file=is_public_file)
-            file_path = os.path.join(
-                MEDIA_PATH, str(uploaded_file_object.uuid))
 
-            with Image.open(uploaded_file.file) as f:
-                image_format = f.format.upper()
+            if SAVE_UPLOADED_IMAGES_LOCALLY:
+                file_path = os.path.join(
+                    MEDIA_PATH, str(uploaded_file_object.uuid))
 
-            if image_format in supported_converters:
-                converted_image_file_path = convert_to_png(
-                    uploaded_file, file_path)
+                with Image.open(uploaded_file.file) as f:
+                    image_format = f.format.upper()
 
-                if converted_image_file_path is None:
-                    return JsonResponse({
-                        "status": 302,
-                        "message": "Problem with the converter",
-                    })
+                if image_format in supported_converters:
+                    converted_image_file_path = convert_to_png(
+                        uploaded_file, file_path)
 
-                uploaded_file_object.file_name = os.path.split(
-                    converted_image_file_path)[1]
-                file_path = converted_image_file_path
-
-            if create_dirs(file_path):
-                if image_format not in supported_converters:
-                    file_path = os.path.join(file_path, file_name)
-                    try:
-                        user_image = Image.open(uploaded_file.file)
-                        user_image.save(file_path)
-                    except Exception as e:
-                        logger.error(traceback.format_exc())
+                    if converted_image_file_path is None:
                         return JsonResponse({
-                            "status": 301,
-                            "message": "Cannot able to save the file to the disk",
+                            "status": 302,
+                            "message": "Problem with the converter",
                         })
 
-                uploaded_file_object.file_path = file_path
-                uploaded_file_object.save()
-            else:
-                return JsonResponse({
-                    "status": 400,
-                    "message": "cannot able to create a dir in media"
-                })
+                    uploaded_file_object.file_name = os.path.split(
+                        converted_image_file_path)[1]
+                    file_path = converted_image_file_path
 
-            return JsonResponse({
-                "status": 200,
-                "message": "success",
-                "image_id": str(uploaded_file_object.uuid),
-                "image_url": MEDIA_URL + str(uploaded_file_object.uuid) + "/" + str(uploaded_file_object.file_name),
-            })
+                if create_dirs(file_path):
+                    if image_format not in supported_converters:
+                        file_path = os.path.join(file_path, file_name)
+                        try:
+                            user_image = Image.open(uploaded_file.file)
+                            user_image.save(file_path)
+                        except Exception as e:
+                            logger.error(traceback.format_exc())
+                            return JsonResponse({
+                                "status": 301,
+                                "message": "Cannot able to save the file to the disk",
+                            })
+
+                    uploaded_file_object.file_path = file_path
+                    uploaded_file_object.save()
+                else:
+                    return JsonResponse({
+                        "status": 400,
+                        "message": "cannot able to create a dir in media"
+                    })
+
+                return JsonResponse({
+                    "status": 200,
+                    "message": "success",
+                    "image_id": str(uploaded_file_object.uuid),
+                    "image_url": MEDIA_URL + str(uploaded_file_object.uuid) + "/" + str(uploaded_file_object.file_name),
+                })
+            else:
+                api_response = imgbb_upload(file_contents)
+
+                if api_response["status"] == 200:
+                    image_url = api_response["data"]["url"]
+                    uploaded_file_object.file_path = image_url
+                    uploaded_file_object.is_file_uploaded_on_imgbb = True
+                    uploaded_file_object.save()
+
+                    return JsonResponse({
+                        "status": 200,
+                        "message": "success",
+                        "image_id": str(uploaded_file_object.uuid),
+                        "image_url": image_url,
+                    })
+                else:
+                    return JsonResponse({
+                        "status": api_response["status_code"],
+                        "message": api_response["error"]["message"],
+                    })
         except Exception as e:
             logger.error(traceback.format_exc())
             return JsonResponse({
@@ -167,13 +193,24 @@ def GetSummarisedTextView(request):
                     "message": "Invalid Image ID or Uploaded File object not found"
                 })
 
-            detected_text = recognize_text_wrapper(user_uploaded_file_obj.file_path)
+            file_path = user_uploaded_file_obj.file_path
+
+            if user_uploaded_file_obj.is_file_uploaded_on_imgbb:
+                temp_path = create_dir_in_temporary_media()
+                temp_path = os.path.join(temp_path, str(uuid4()) + ".png")
+                imgbb_download_file(
+                    user_uploaded_file_obj.file_path, temp_path)
+                file_path = temp_path
+
+            detected_text = recognize_text_wrapper(file_path)
             cleaned_detected_text = re.sub('[^A-Za-z0-9]+', ' ', detected_text)
+            summary_text = summarize_text(cleaned_detected_text)
+            cleaned_summary_text = re.sub('[^A-Za-z0-9]+', ' ', summary_text)
 
             if len(cleaned_detected_text):
                 return JsonResponse({
                     "status": 200,
-                    "message": cleaned_detected_text,
+                    "message": cleaned_summary_text,
                 })
 
             return JsonResponse({
