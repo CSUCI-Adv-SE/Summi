@@ -130,6 +130,7 @@ dmypy.json
 
 
 media/*
+temporary/*
 
 summIApp/ml_exp/*
 service-account.json
