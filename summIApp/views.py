@@ -15,6 +15,8 @@ from .imgbb.upload_file import imgbb_upload
 from .imgbb.download_file import imgbb_download_file
 from django.shortcuts import redirect, render
 from django.core import serializers
+from rest_framework.authtoken.models import Token
+
 
 # logging
 logger = logging.getLogger("django")
@@ -235,8 +237,29 @@ def registerView(request):
     password = request.data['password']
     print(email, password)
     try:
-        User.objects.create(username=username, email=email, password=password)
-        return JsonResponse({'register': True})
+        if(username is None):
+            return JsonResponse({
+                    "status": 300,
+                    "message": "Missing Username"
+                })
+        elif(email is None):
+            return JsonResponse({
+                    "status": 300,
+                    "message": "Missing User Email"
+                })
+        elif(password is None):
+            return JsonResponse({
+                    "status": 300,
+                    "message": "Missing User Password"
+                })
+        else:
+            token = Token.objects.create(username)
+            print(token.key)
+            User.objects.create(username=username, email=email, password=password, token=token)
+            return JsonResponse({
+                'status': 200, 
+                'message': token
+                })
     except Exception as e:
             logger.error(traceback.format_exc())
             return JsonResponse({
@@ -255,8 +278,22 @@ def loginView(request):
     print('user//////', user)
     if user and user.is_active:
         try:
-            login(request._request, user)
-            return JsonResponse({'login': True})
+            if(email is None):
+                return JsonResponse({
+                    "status": 300,
+                    "message": "Missing User Email"
+                    })
+            elif(password is None):
+                return JsonResponse({
+                    "status": 300,
+                    "message": "Missing User Password"
+                    })
+            else:
+                login(request._request, user)
+                return JsonResponse({
+                    "status": 200,
+                    "message": user
+                })
         except Exception as e:
             logger.error(traceback.format_exc())
             return JsonResponse({
@@ -264,7 +301,10 @@ def loginView(request):
                 "message": str(e),
             })
     else:
-        return JsonResponse({'login': False})
+        return JsonResponse({
+            "status": 500,
+            "message": "Error",
+        })
     
 @csrf_exempt
 @api_view(["GET"])
@@ -287,7 +327,10 @@ def currentUserView(request):
 def logoutView(request):
     try:
         logout(request)
-        return JsonResponse({'logout': True})
+        return JsonResponse({
+            'status': 200, 
+            'message': 'true',
+        })
     except Exception as e:
         logger.error(traceback.format_exc())
         return JsonResponse({
