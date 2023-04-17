@@ -253,12 +253,12 @@ def registerView(request):
                     "message": "Missing User Password"
                 })
         else:
-            token = Token.objects.create(username)
-            print(token.key)
-            User.objects.create(username=username, email=email, password=password, token=token)
+            # token = Token.objects.create(username)
+            # print(token.key)
+            User.objects.create(username=username, email=email, password=password)
             return JsonResponse({
                 'status': 200, 
-                'message': token
+                'message': username
                 })
     except Exception as e:
             logger.error(traceback.format_exc())
@@ -303,7 +303,7 @@ def loginView(request):
     else:
         return JsonResponse({
             "status": 500,
-            "message": "Error",
+            "message": "User Not Found",
         })
     
 @csrf_exempt
