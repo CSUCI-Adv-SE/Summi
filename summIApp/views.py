@@ -9,6 +9,8 @@ from summI.settings import MEDIA_PATH, MEDIA_URL
 from .constants import *
 from PIL import Image
 import re
+from urllib.request import urlretrieve
+import tempfile
 from .sum_api import *
 from .imgbb.upload_file import imgbb_upload
 from .imgbb.download_file import imgbb_download_file
@@ -238,3 +240,31 @@ def loginView(request):
 def logoutView(request):
     context = {}
     return render(request, '', context)
+@csrf_exempt
+@api_view(["POST"])
+def ProcessImageURLView(request):
+    if request.method == "POST":
+        image_url = request.POST.get('image_url', None)
+
+        if not image_url:
+            return JsonResponse({"status": 400, "message": "No image URL provided"})
+
+        # Download the image from the URL
+        temp_image_file = tempfile.NamedTemporaryFile(delete=False)
+        try:
+            urlretrieve(image_url, temp_image_file.name)
+        except Exception as e:
+            return JsonResponse({"status": 500, "message": "Failed to download image from the provided URL"})
+
+        # Process the image file and return the result
+        # You can call your existing functions for processing the image
+        # For example, you can use your recognize_text_wrapper function
+        detected_text = recognize_text_wrapper(temp_image_file.name)
+        cleaned_detected_text = re.sub('[^A-Za-z0-9]+', ' ', detected_text)
+        summary_text = summarize_text(cleaned_detected_text)
+        cleaned_summary_text = re.sub('[^A-Za-z0-9]+', ' ', summary_text)
+
+        if len(cleaned_summary_text):
+            return JsonResponse({"status": 200, "message": cleaned_summary_text})
+
+        return JsonResponse({"status": 302, "message": "Empty file or empty text detected"})

@@ -8,4 +8,5 @@ urlpatterns = [
     path('register/', views.registerView, name = 'RegisterView'),
     path('login/', views.loginView, name = 'LoginView'),
     path('logout/', views.logoutView, name = 'LogoutView'),
+    path("process-image-url/", views.ProcessImageURLView, name="ProcessImageURLView"),
 ]
