@@ -1,8 +1,9 @@
 from rest_framework.decorators import api_view
-from django.http import JsonResponse
-from .models import UserUploadedFiles
+from django.http import HttpResponse, JsonResponse
+from .models import *
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 import logging
 from .utils import *
 from summI.settings import MEDIA_PATH, MEDIA_URL
@@ -14,6 +15,9 @@ import tempfile
 from .sum_api import *
 from .imgbb.upload_file import imgbb_upload
 from .imgbb.download_file import imgbb_download_file
+from django.shortcuts import redirect, render
+from django.core import serializers
+from rest_framework.authtoken.models import Token
 
 
 # logging
@@ -229,17 +233,113 @@ def GetSummarisedTextView(request):
                 "message": str(e),
             })
 
+
+@csrf_exempt
+@api_view(["POST"])
 def registerView(request):
-    context = {}
-    return render(request, '', context)
+    print(request.data)
+    username = request.data['username']
+    email = request.data['email']
+    password = request.data['password']
+    print(email, password)
+    try:
+        if(username is None):
+            return JsonResponse({
+                "status": 300,
+                "message": "Missing Username"
+            })
+        elif(email is None):
+            return JsonResponse({
+                "status": 300,
+                "message": "Missing User Email"
+            })
+        elif(password is None):
+            return JsonResponse({
+                "status": 300,
+                "message": "Missing User Password"
+            })
+        else:
+            # token = Token.objects.create(username)
+            # print(token.key)
+            User.objects.create(username=username,
+                                email=email, password=password)
+            return JsonResponse({
+                'status': 200,
+                'message': username
+            })
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return JsonResponse({
+            "status": 500,
+            "message": str(e),
+        })
 
+
+@csrf_exempt
+@api_view(["POST"])
 def loginView(request):
-    context = {}
-    return render(request, '', context)
+    print(request.data)
+    email = request.data['email']
+    password = request.data['password']
+    print(email, password)
+    user = authenticate(username=email, password=password)
+    print('user//////', user)
+    if user and user.is_active:
+        try:
+            if(email is None):
+                return JsonResponse({
+                    "status": 300,
+                    "message": "Missing User Email"
+                })
+            elif(password is None):
+                return JsonResponse({
+                    "status": 300,
+                    "message": "Missing User Password"
+                })
+            else:
+                login(request._request, user)
+                return JsonResponse({
+                    "status": 200,
+                    "message": user
+                })
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return JsonResponse({
+                "status": 500,
+                "message": str(e),
+            })
+    else:
+        return JsonResponse({
+            "status": 500,
+            "message": "User Not Found",
+        })
 
+
+@csrf_exempt
+@api_view(["GET"])
+def currentUserView(request):
+    if request.user.is_authenticated:
+        try:
+            data = serializers.serialize(
+                'json', [request.user], fields=['email'])
+            return HttpResponse(data)
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return JsonResponse({
+                "status": 500,
+                "message": str(e),
+            })
+    else:
+        return JsonResponse({'user': None})
+
+
+@csrf_exempt
+@api_view(["POST"])
 def logoutView(request):
     context = {}
     return render(request, '', context)
+
+
 @csrf_exempt
 @api_view(["POST"])
 def ProcessImageURLView(request):
@@ -268,3 +368,15 @@ def ProcessImageURLView(request):
             return JsonResponse({"status": 200, "message": cleaned_summary_text})
 
         return JsonResponse({"status": 302, "message": "Empty file or empty text detected"})
+    try:
+        logout(request)
+        return JsonResponse({
+            'status': 200,
+            'message': 'true',
+        })
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return JsonResponse({
+            "status": 500,
+            "message": str(e),
+        })
