@@ -245,51 +245,63 @@ def registerView(request):
         confirm_password = request.POST.get('confirm_password', None)
 
         try:
-            if username is None:
+            if not username:
                 return JsonResponse({
                     "status": 300,
                     "message": "Missing Username"
                 })
-            elif email is None:
+            if not email:
                 return JsonResponse({
                     "status": 301,
                     "message": "Missing User Email"
                 })
-            elif password is None:
+            if not password:
                 return JsonResponse({
                     "status": 302,
                     "message": "Missing User Password"
                 })
-            elif password != confirm_password:
+            if password != confirm_password:
                 return JsonResponse({
                     "status": 303,
                     "message": "Passwords are mismatching",
                 })
-            else:
-                objects_with_username = User.objects.filter(username=username)
 
-                if objects_with_username:
-                    return JsonResponse({
-                        "status": 304,
-                        "message": "Username already taken. Please use different Username"
-                    })
-                objects_with_email = User.objects.filter(email=email)
-
-                if objects_with_email:
-                    return JsonResponse({
-                        "status": 305,
-                        "message": "Username with this email already present. Please sign in with your username"
-                    })
-
-                user_obj = User.objects.create_user(
-                    username=username, email=email, password=password)
-
-                Token.objects.create(user=user_obj)
-
+            if not is_email_valid(email):
                 return JsonResponse({
-                    'status': 200,
-                    'message': "success. User has been created!",
+                    "status": 310,
+                    "message": "Please use valid email",
                 })
+
+            if not is_strong_password(password):
+                return JsonResponse({
+                    "status": 311,
+                    "message": "Please use Strong Password",
+                })
+
+            objects_with_username = User.objects.filter(username=username)
+
+            if objects_with_username:
+                return JsonResponse({
+                    "status": 304,
+                    "message": "Username already taken. Please use different Username"
+                })
+            objects_with_email = User.objects.filter(email=email)
+
+            if objects_with_email:
+                return JsonResponse({
+                    "status": 305,
+                    "message": "Username with this email already present. Please sign in with your username"
+                })
+
+            user_obj = User.objects.create_user(
+                username=username, email=email, password=password)
+
+            Token.objects.create(user=user_obj)
+
+            return JsonResponse({
+                'status': 200,
+                'message': "success. User has been created!",
+            })
         except Exception as e:
             logger.error(traceback.format_exc())
             return JsonResponse({
@@ -302,14 +314,14 @@ def registerView(request):
 @api_view(["POST"])
 def loginView(request):
     if request.method == "POST":
-        username = request.POST.get('username', None)
+        email = request.POST.get('email', None)
         password = request.POST.get('password', None)
 
         try:
-            if not username:
+            if not email:
                 return JsonResponse({
                     "status": 301,
-                    "message": "Missing username"
+                    "message": "Missing email"
                 })
 
             if not password:
@@ -318,15 +330,28 @@ def loginView(request):
                     "message": "Missing Password"
                 })
 
-            if not User.objects.filter(username=username).count():
+            if not is_email_valid:
                 return JsonResponse({
-                    "status": 401,
-                    "message": "Username not found"
+                    "status": 303,
+                    "message": "Invalid Email Format"
                 })
 
-            user_obj = authenticate(username=username, password=password)
+            user_objs = User.objects.filter(email=email)
+            if not user_objs.count():
+                return JsonResponse({
+                    "status": 401,
+                    "message": "Email not found"
+                })
+            
+            if user_objs.count() > 1:
+                return JsonResponse({
+                    "status": 410,
+                    "message": "Please report this message to the developer. Multiple accounts found with the same email"
+                })
+            
+            user_obj = user_objs.first()
 
-            if not user_obj:
+            if not user_obj.check_password(password):
                 return JsonResponse({
                     "status": 400,
                     "message": "Bad credentials"
