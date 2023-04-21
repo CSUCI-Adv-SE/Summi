@@ -1,0 +1,32 @@
+2023-03-04 10:31:05,254 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-03-04 14:23:08,634 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-03-04 14:23:08,635 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-03-04 14:23:08,636 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-03-04 14:23:08,636 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-03-04 14:23:08,636 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-03-04 14:23:08,636 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-03-04 14:23:08,643 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-03-04 14:58:19,646 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-03-04 14:58:19,649 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-03-04 14:58:19,649 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-03-04 14:58:19,649 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-03-04 14:58:19,649 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-03-04 14:58:19,649 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-03-04 14:58:19,656 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-03-04 15:22:58,233 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-03-04 15:22:58,235 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-03-04 15:22:58,235 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-03-04 15:22:58,235 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-03-04 15:22:58,235 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-03-04 15:22:58,236 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-03-04 15:22:58,242 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-03-04 17:31:39,123 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-03-04 17:31:39,124 PIL.PngImagePlugin DEBUG    STREAM b'tEXt' 41 25
+2023-03-04 17:31:39,124 PIL.PngImagePlugin DEBUG    STREAM b'iTXt' 78 806
+2023-03-04 17:31:39,124 PIL.PngImagePlugin DEBUG    STREAM b'PLTE' 896 768
+2023-03-04 17:31:39,125 PIL.PngImagePlugin DEBUG    STREAM b'tRNS' 1676 256
+2023-03-04 17:31:39,125 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 1944 3975
+2023-03-04 17:31:39,131 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file
+2023-03-04 18:48:35,583 PIL.TiffImagePlugin DEBUG    tag: Orientation (274) - type: short (3) - value: b'\x00\x01'
+2023-03-04 18:48:35,585 PIL.TiffImagePlugin DEBUG    tag: ExifIFD (34665) - type: long (4) - value: b'\x00\x00\x00&'
+2023-03-04 18:48:35,593 django       ERROR    table summIApp_useruploadedfiles has no column named is_public_file

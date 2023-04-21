@@ -1,0 +1,97 @@
+2023-03-10 21:24:18,771 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-03-10 21:24:56,781 PIL.TiffImagePlugin DEBUG    tag: XResolution (282) - type: rational (5) Tag Location: 22 - Data Location: 86 - value: b'\x00\x00\x00H\x00\x00\x00\x01'
+2023-03-10 21:24:56,782 PIL.TiffImagePlugin DEBUG    tag: YResolution (283) - type: rational (5) Tag Location: 34 - Data Location: 94 - value: b'\x00\x00\x00H\x00\x00\x00\x01'
+2023-03-10 21:24:56,782 PIL.TiffImagePlugin DEBUG    tag: ResolutionUnit (296) - type: short (3) - value: b'\x00\x02'
+2023-03-10 21:24:56,782 PIL.TiffImagePlugin DEBUG    tag: DateTime (306) - type: string (2) Tag Location: 58 - Data Location: 102 - value: b'2022:10:25 19:55:55\x00'
+2023-03-10 21:24:56,782 PIL.TiffImagePlugin DEBUG    tag: YCbCrPositioning (531) - type: short (3) - value: b'\x00\x01'
+2023-03-10 21:24:56,782 PIL.TiffImagePlugin DEBUG    tag: ExifIFD (34665) - type: long (4) - value: b'\x00\x00\x00z'
+2023-03-10 21:24:56,792 django       ERROR    Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/sqlite3/base.py", line 357, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: table summIApp_useruploadedfiles has no column named is_public_file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huminrui/Desktop/Summi/summIApp/views.py", line 58, in UserUploadedFilesView
+    uploaded_file_object = UserUploadedFiles.objects.create(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/query.py", line 671, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/base.py", line 812, in save
+    self.save_base(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/base.py", line 863, in save_base
+    updated = self._save_table(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/base.py", line 1006, in _save_table
+    results = self._do_insert(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/base.py", line 1047, in _do_insert
+    return manager._insert(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/query.py", line 1791, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1660, in execute_sql
+    cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/sqlite3/base.py", line 357, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: table summIApp_useruploadedfiles has no column named is_public_file
+
+2023-03-10 21:25:28,905 PIL.TiffImagePlugin DEBUG    tag: Orientation (274) - type: short (3) - value: b'\x00\x01'
+2023-03-10 21:25:28,906 PIL.TiffImagePlugin DEBUG    tag: ExifIFD (34665) - type: long (4) - value: b'\x00\x00\x00&'
+2023-03-10 21:25:28,911 django       ERROR    Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/sqlite3/base.py", line 357, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: table summIApp_useruploadedfiles has no column named is_public_file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huminrui/Desktop/Summi/summIApp/views.py", line 58, in UserUploadedFilesView
+    uploaded_file_object = UserUploadedFiles.objects.create(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/query.py", line 671, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/base.py", line 812, in save
+    self.save_base(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/base.py", line 863, in save_base
+    updated = self._save_table(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/base.py", line 1006, in _save_table
+    results = self._do_insert(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/base.py", line 1047, in _do_insert
+    return manager._insert(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/query.py", line 1791, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1660, in execute_sql
+    cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/django/db/backends/sqlite3/base.py", line 357, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: table summIApp_useruploadedfiles has no column named is_public_file
+

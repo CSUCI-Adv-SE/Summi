@@ -1,0 +1,7 @@
+SECRET_KEY = "django-insecure-e8#nh*$sq4!v!yd(p)*4%hi3knklhy-=vemygldm=5+a!!n6&3"
+NAME = 'postgres'
+USER = 'summi_master'
+PASSWORD = 'cabbageFry'
+HOST = 'summi-prod-db.cplmrxwxxzto.us-west-2.rds.amazonaws.com'
+IMGBB_API_KEY = "b030b6598c34e7a5d3d07702bbc9db09"
+OPENAI_API_KEY="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"
