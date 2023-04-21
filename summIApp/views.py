@@ -213,6 +213,10 @@ def GetSummarisedTextView(request):
             summary_text = summarize_text(cleaned_detected_text)
             cleaned_summary_text = re.sub('[^A-Za-z0-9]+', ' ', summary_text)
 
+            if request.user.is_authenticated:
+                UserSummaryHistory.objects.create(
+                    uploaded_file=user_uploaded_file_obj, summary_text=cleaned_summary_text)
+
             if user_uploaded_file_obj.is_file_uploaded_on_imgbb:
                 remove_directory(temp_path_dir)
 
@@ -342,13 +346,13 @@ def loginView(request):
                     "status": 401,
                     "message": "Email not found"
                 })
-            
+
             if user_objs.count() > 1:
                 return JsonResponse({
                     "status": 410,
                     "message": "Please report this message to the developer. Multiple accounts found with the same email"
                 })
-            
+
             user_obj = user_objs.first()
 
             if not user_obj.check_password(password):
@@ -426,3 +430,39 @@ def ProcessImageURLView(request):
             return JsonResponse({"status": 200, "message": cleaned_summary_text})
 
         return JsonResponse({"status": 302, "message": "Empty file or empty text detected"})
+
+
+@csrf_exempt
+@api_view(["POST"])
+def GetUserSummaryHistory(request):
+    if request.method == "POST":
+        try:
+            if not request.user.is_authenticated:
+                return JsonResponse({
+                    "status": 400,
+                    "message": "Only allowed for logined users."
+                })
+
+            user_obj = request.user
+            history = []
+
+            history_objs = UserSummaryHistory.objects.filter(
+                uploaded_file__user=user_obj)
+
+            for history_obj in history_objs:
+                history.append({
+                    "image_path": history_obj.uploaded_file.file_path,
+                    "image_summary": history_obj.summary_text
+                })
+
+            return JsonResponse({
+                "status": 200,
+                "message": "success",
+                "history": history,
+            })
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return JsonResponse({
+                "status": 500,
+                "message": str(e),
+            })
