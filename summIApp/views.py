@@ -1,8 +1,9 @@
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
-from .models import UserUploadedFiles
+from .models import *
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 import logging
 from .utils import *
 from summI.settings import MEDIA_PATH, MEDIA_URL
@@ -14,6 +15,7 @@ import tempfile
 from .sum_api import *
 from .imgbb.upload_file import imgbb_upload
 from .imgbb.download_file import imgbb_download_file
+from rest_framework.authtoken.models import Token
 
 # logging
 logger = logging.getLogger("django")
@@ -48,7 +50,6 @@ def UserUploadedFilesView(request):
             file_name = strip_html(uploaded_file.name)
 
             if user.is_authenticated:
-                user = User.objects.filter(user=user).first()
                 is_public_file = False
             else:
                 user = User.objects.filter(username="guest_user")
@@ -184,8 +185,13 @@ def GetSummarisedTextView(request):
                     "message": "Missing Image ID"
                 })
 
+            if request.user.is_authenticated:
+                user_obj = request.user
+            else:
+                user_obj = User.objects.get(username="guest_user")
+
             user_uploaded_file_obj = UserUploadedFiles.objects.filter(
-                uuid=image_uuid).first()
+                uuid=image_uuid, user=user_obj).first()
 
             if not user_uploaded_file_obj:
                 return JsonResponse({
@@ -227,6 +233,145 @@ def GetSummarisedTextView(request):
                 "status": 500,
                 "message": str(e),
             })
+
+
+@csrf_exempt
+@api_view(["POST"])
+def registerView(request):
+    if request.method == "POST":
+        username = request.POST.get('username', None)
+        email = request.POST.get('email', None)
+        password = request.POST.get('password', None)
+        confirm_password = request.POST.get('confirm_password', None)
+
+        try:
+            if username is None:
+                return JsonResponse({
+                    "status": 300,
+                    "message": "Missing Username"
+                })
+            elif email is None:
+                return JsonResponse({
+                    "status": 301,
+                    "message": "Missing User Email"
+                })
+            elif password is None:
+                return JsonResponse({
+                    "status": 302,
+                    "message": "Missing User Password"
+                })
+            elif password != confirm_password:
+                return JsonResponse({
+                    "status": 303,
+                    "message": "Passwords are mismatching",
+                })
+            else:
+                objects_with_username = User.objects.filter(username=username)
+
+                if objects_with_username:
+                    return JsonResponse({
+                        "status": 304,
+                        "message": "Username already taken. Please use different Username"
+                    })
+                objects_with_email = User.objects.filter(email=email)
+
+                if objects_with_email:
+                    return JsonResponse({
+                        "status": 305,
+                        "message": "Username with this email already present. Please sign in with your username"
+                    })
+
+                user_obj = User.objects.create_user(
+                    username=username, email=email, password=password)
+
+                Token.objects.create(user=user_obj)
+
+                return JsonResponse({
+                    'status': 200,
+                    'message': "success. User has been created!",
+                })
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return JsonResponse({
+                "status": 500,
+                "message": str(e),
+            })
+
+
+@csrf_exempt
+@api_view(["POST"])
+def loginView(request):
+    if request.method == "POST":
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+
+        try:
+            if not username:
+                return JsonResponse({
+                    "status": 301,
+                    "message": "Missing username"
+                })
+
+            if not password:
+                return JsonResponse({
+                    "status": 302,
+                    "message": "Missing Password"
+                })
+
+            if not User.objects.filter(username=username).count():
+                return JsonResponse({
+                    "status": 401,
+                    "message": "Username not found"
+                })
+
+            user_obj = authenticate(username=username, password=password)
+
+            if not user_obj:
+                return JsonResponse({
+                    "status": 400,
+                    "message": "Bad credentials"
+                })
+
+            token_objs = Token.objects.filter(user=user_obj)
+
+            if not token_objs.count():
+                return JsonResponse({
+                    "status": 401,
+                    "message": "Token not found for the user. Please create a new account."
+                })
+
+            token_obj = token_objs.first()
+
+            return JsonResponse({
+                "status": 200,
+                "message": "Login Success",
+                "token": str(token_obj.key),
+            })
+
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return JsonResponse({
+                "status": 500,
+                "message": str(e),
+            })
+
+
+# @csrf_exempt
+# @api_view(["POST"])
+# def logoutView(request):
+#     try:
+#         logout(request)
+#         return JsonResponse({
+#             'status': 200,
+#             'message': 'true',
+#         })
+#     except Exception as e:
+#         logger.error(traceback.format_exc())
+#         return JsonResponse({
+#             "status": 500,
+#             "message": str(e),
+#         })
+
 
 @csrf_exempt
 @api_view(["POST"])
