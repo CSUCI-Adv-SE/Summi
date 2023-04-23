@@ -334,7 +334,7 @@ def loginView(request):
                     "message": "Missing Password"
                 })
 
-            if not is_email_valid:
+            if not is_email_valid(email):
                 return JsonResponse({
                     "status": 303,
                     "message": "Invalid Email Format"
@@ -385,23 +385,6 @@ def loginView(request):
             })
 
 
-# @csrf_exempt
-# @api_view(["POST"])
-# def logoutView(request):
-#     try:
-#         logout(request)
-#         return JsonResponse({
-#             'status': 200,
-#             'message': 'true',
-#         })
-#     except Exception as e:
-#         logger.error(traceback.format_exc())
-#         return JsonResponse({
-#             "status": 500,
-#             "message": str(e),
-#         })
-
-
 @csrf_exempt
 @api_view(["POST"])
 def ProcessImageURLView(request):
@@ -450,8 +433,14 @@ def GetUserSummaryHistory(request):
                 uploaded_file__user=user_obj)
 
             for history_obj in history_objs:
+                image_path = history_obj.uploaded_file.file_path
+
+                if not history_obj.uploaded_file.is_file_uploaded_on_imgbb:
+                    _, file_name = os.path.split(image_path)
+                    image_path = f"/media/{str(history_obj.uploaded_file.uuid)}/{file_name}"
+
                 history.append({
-                    "image_path": history_obj.uploaded_file.file_path,
+                    "image_path": image_path,
                     "image_summary": history_obj.summary_text
                 })
 
