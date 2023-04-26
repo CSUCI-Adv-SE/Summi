@@ -29,7 +29,7 @@ def strip_html(name):
 def is_email_valid(email):
     try:
         regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
-        return re.fullmatch(regex, email)
+        return re.match(regex, email)
     except Exception:
         logger.error(traceback.format_exc())
         return False
