@@ -37,7 +37,7 @@ def is_email_valid(email):
 
 def is_strong_password(password):
     try:
-        regex = r"[A-Za-z0-9@#$%^&+=]{8,}"
+        regex = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$"
         return re.match(regex, password)
     except Exception:
         logger.error(traceback.format_exc())
