@@ -375,6 +375,7 @@ def loginView(request):
                 "status": 200,
                 "message": "Login Success",
                 "token": str(token_obj.key),
+                "username": str(user_obj.username),
             })
 
         except Exception as e:
