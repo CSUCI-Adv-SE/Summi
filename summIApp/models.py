@@ -25,3 +25,7 @@ class UserSummaryHistory(models.Model):
         UserUploadedFiles, on_delete=models.CASCADE, help_text="Image used for the summary")
     summary_text = models.TextField(
         default="", help_text="Summary for the image")
+
+class SummIConfig(models.Model):
+    USE_OCR_APIs = models.BooleanField(default=True, help_text="Use google OCR APIs?")
+    SAVE_UPLOADED_IMAGES_LOCALLY = models.BooleanField(default=False, help_text="Save User uploaded images to local disk?")
