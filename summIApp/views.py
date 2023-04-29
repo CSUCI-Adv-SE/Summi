@@ -64,7 +64,12 @@ def UserUploadedFilesView(request):
             uploaded_file_object = UserUploadedFiles.objects.create(
                 user=user, file_name=file_name, is_public_file=is_public_file)
 
-            if SAVE_UPLOADED_IMAGES_LOCALLY:
+            summi_config_objs = SummIConfig.objects.all()
+
+            if summi_config_objs.count() == 0:
+                SummIConfig.objects.create()
+
+            if SummIConfig.objects.last().SAVE_UPLOADED_IMAGES_LOCALLY:
                 file_path = os.path.join(
                     MEDIA_PATH, str(uploaded_file_object.uuid))
 
@@ -375,6 +380,7 @@ def loginView(request):
                 "status": 200,
                 "message": "Login Success",
                 "token": str(token_obj.key),
+                "username": str(user_obj.username),
             })
 
         except Exception as e:

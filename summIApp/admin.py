@@ -20,3 +20,10 @@ class UserSummaryHistoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(UserSummaryHistory, UserSummaryHistoryAdmin)
+
+
+class SummIConfigAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(SummIConfig, SummIConfigAdmin)

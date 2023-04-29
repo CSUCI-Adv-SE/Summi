@@ -29,7 +29,7 @@ def strip_html(name):
 def is_email_valid(email):
     try:
         regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
-        return re.fullmatch(regex, email)
+        return re.match(regex, email)
     except Exception:
         logger.error(traceback.format_exc())
         return False
@@ -37,7 +37,7 @@ def is_email_valid(email):
 
 def is_strong_password(password):
     try:
-        regex = r"[A-Za-z0-9@#$%^&+=]{8,}"
+        regex = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$"
         return re.match(regex, password)
     except Exception:
         logger.error(traceback.format_exc())
