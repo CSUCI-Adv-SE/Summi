@@ -407,18 +407,47 @@ def ProcessImageURLView(request):
         except Exception as e:
             return JsonResponse({"status": 500, "message": "Failed to download image from the provided URL"})
 
-        # Process the image file and return the result
-        # You can call your existing functions for processing the image
-        # For example, you can use your recognize_text_wrapper function
-        detected_text = recognize_text_wrapper(temp_image_file.name)
-        cleaned_detected_text = re.sub('[^A-Za-z0-9]+', ' ', detected_text)
-        summary_text = summarize_text(cleaned_detected_text)
-        cleaned_summary_text = re.sub('[^A-Za-z0-9]+', ' ', summary_text)
+        # Save the file from the URL and create a UserUploadedFiles object
+        user = request.user if request.user.is_authenticated else User.objects.get(username="guest_user")
+        file_name = os.path.basename(temp_image_file.name)
+        is_public_file = not request.user.is_authenticated
 
-        if len(cleaned_summary_text):
-            return JsonResponse({"status": 200, "message": cleaned_summary_text})
+        uploaded_file_object = UserUploadedFiles.objects.create(
+            user=user, file_name=file_name, is_public_file=is_public_file)
 
-        return JsonResponse({"status": 302, "message": "Empty file or empty text detected"})
+        summi_config_objs = SummIConfig.objects.all()
+
+        if summi_config_objs.count() == 0:
+            SummIConfig.objects.create()
+
+        if SummIConfig.objects.last().SAVE_UPLOADED_IMAGES_LOCALLY:
+            file_path = os.path.join(MEDIA_PATH, str(uploaded_file_object.uuid), file_name)
+
+            if create_dirs(os.path.dirname(file_path)):
+                shutil.copy2(temp_image_file.name, file_path)
+                uploaded_file_object.file_path = file_path
+                uploaded_file_object.save()
+            else:
+                return JsonResponse({"status": 400, "message": "cannot able to create a dir in media"})
+        else:
+            api_response = imgbb_upload(temp_image_file.read())
+
+            if api_response["status"] == 200:
+                image_url = api_response["data"]["url"]
+                uploaded_file_object.file_path = image_url
+                uploaded_file_object.is_file_uploaded_on_imgbb = True
+                uploaded_file_object.save()
+            else:
+                return JsonResponse(
+                    {"status": api_response["status_code"], "message": api_response["error"]["message"]})
+
+        # Return the uploaded image details without processing the image
+        return JsonResponse({
+            "status": 200,
+            "message": "success",
+            "image_id": str(uploaded_file_object.uuid),
+            "image_url": MEDIA_URL + str(uploaded_file_object.uuid) + "/" + str(uploaded_file_object.file_name),
+        })
 
 
 @csrf_exempt
