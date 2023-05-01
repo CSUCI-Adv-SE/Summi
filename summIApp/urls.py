@@ -12,4 +12,5 @@ urlpatterns = [
     # path('logout/', views.logoutView, name = 'LogoutView'),
     path("process-image-url/", views.ProcessImageURLView,
          name="ProcessImageURLView"),
+    path("history/", views.GetUserSummaryHistory, name="GetUserSummaryHistory")
 ]

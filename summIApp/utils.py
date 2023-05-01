@@ -8,6 +8,7 @@ from summI.settings import BASE_DIR
 from .ocr_model.summi_ocr import recognize_text
 from .ocr_api import recognize_text_api
 import shutil
+from .models import SummIConfig
 
 logger = logging.getLogger("django")
 
@@ -38,7 +39,13 @@ def convert_to_png(uploaded_file, file_path):
 
 def recognize_text_wrapper(file_path):
     try:
-        if USE_OCR_APIs:
+
+        summi_config_objs = SummIConfig.objects.all()
+
+        if summi_config_objs.count() == 0:
+            SummIConfig.objects.create()
+
+        if SummIConfig.objects.last().USE_OCR_APIs:
             return recognize_text_api(file_path)
         else:
             return recognize_text(file_path)
