@@ -1,8 +1,9 @@
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
-from .models import UserUploadedFiles
+from .models import *
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 import logging
 from .utils import *
 from summI.settings import MEDIA_PATH, MEDIA_URL
@@ -14,6 +15,7 @@ import tempfile
 from .sum_api import *
 from .imgbb.upload_file import imgbb_upload
 from .imgbb.download_file import imgbb_download_file
+from rest_framework.authtoken.models import Token
 
 # logging
 logger = logging.getLogger("django")
@@ -48,7 +50,6 @@ def UserUploadedFilesView(request):
             file_name = strip_html(uploaded_file.name)
 
             if user.is_authenticated:
-                user = User.objects.filter(user=user).first()
                 is_public_file = False
             else:
                 user = User.objects.filter(username="guest_user")
@@ -63,7 +64,12 @@ def UserUploadedFilesView(request):
             uploaded_file_object = UserUploadedFiles.objects.create(
                 user=user, file_name=file_name, is_public_file=is_public_file)
 
-            if SAVE_UPLOADED_IMAGES_LOCALLY:
+            summi_config_objs = SummIConfig.objects.all()
+
+            if summi_config_objs.count() == 0:
+                SummIConfig.objects.create()
+
+            if SummIConfig.objects.last().SAVE_UPLOADED_IMAGES_LOCALLY:
                 file_path = os.path.join(
                     MEDIA_PATH, str(uploaded_file_object.uuid))
 
@@ -184,8 +190,13 @@ def GetSummarisedTextView(request):
                     "message": "Missing Image ID"
                 })
 
+            if request.user.is_authenticated:
+                user_obj = request.user
+            else:
+                user_obj = User.objects.get(username="guest_user")
+
             user_uploaded_file_obj = UserUploadedFiles.objects.filter(
-                uuid=image_uuid).first()
+                uuid=image_uuid, user=user_obj).first()
 
             if not user_uploaded_file_obj:
                 return JsonResponse({
@@ -207,6 +218,10 @@ def GetSummarisedTextView(request):
             summary_text = summarize_text(cleaned_detected_text)
             cleaned_summary_text = re.sub('[^A-Za-z0-9]+', ' ', summary_text)
 
+            if request.user.is_authenticated:
+                UserSummaryHistory.objects.create(
+                    uploaded_file=user_uploaded_file_obj, summary_text=cleaned_summary_text)
+
             if user_uploaded_file_obj.is_file_uploaded_on_imgbb:
                 remove_directory(temp_path_dir)
 
@@ -227,6 +242,154 @@ def GetSummarisedTextView(request):
                 "status": 500,
                 "message": str(e),
             })
+
+
+@csrf_exempt
+@api_view(["POST"])
+def registerView(request):
+    if request.method == "POST":
+        username = request.POST.get('username', None)
+        email = request.POST.get('email', None)
+        password = request.POST.get('password', None)
+        confirm_password = request.POST.get('confirm_password', None)
+
+        try:
+            if not username:
+                return JsonResponse({
+                    "status": 300,
+                    "message": "Missing Username"
+                })
+            if not email:
+                return JsonResponse({
+                    "status": 301,
+                    "message": "Missing User Email"
+                })
+            if not password:
+                return JsonResponse({
+                    "status": 302,
+                    "message": "Missing User Password"
+                })
+            if password != confirm_password:
+                return JsonResponse({
+                    "status": 303,
+                    "message": "Passwords are mismatching",
+                })
+
+            if not is_email_valid(email):
+                return JsonResponse({
+                    "status": 310,
+                    "message": "Please use valid email",
+                })
+
+            if not is_strong_password(password):
+                return JsonResponse({
+                    "status": 311,
+                    "message": "Please use Strong Password",
+                })
+
+            objects_with_username = User.objects.filter(username=username)
+
+            if objects_with_username:
+                return JsonResponse({
+                    "status": 304,
+                    "message": "Username already taken. Please use different Username"
+                })
+            objects_with_email = User.objects.filter(email=email)
+
+            if objects_with_email:
+                return JsonResponse({
+                    "status": 305,
+                    "message": "Username with this email already present. Please sign in with your username"
+                })
+
+            user_obj = User.objects.create_user(
+                username=username, email=email, password=password)
+
+            Token.objects.create(user=user_obj)
+
+            return JsonResponse({
+                'status': 200,
+                'message': "success. User has been created!",
+            })
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return JsonResponse({
+                "status": 500,
+                "message": str(e),
+            })
+
+
+@csrf_exempt
+@api_view(["POST"])
+def loginView(request):
+    if request.method == "POST":
+        email = request.POST.get('email', None)
+        password = request.POST.get('password', None)
+
+        try:
+            if not email:
+                return JsonResponse({
+                    "status": 301,
+                    "message": "Missing email"
+                })
+
+            if not password:
+                return JsonResponse({
+                    "status": 302,
+                    "message": "Missing Password"
+                })
+
+            if not is_email_valid(email):
+                return JsonResponse({
+                    "status": 303,
+                    "message": "Invalid Email Format"
+                })
+
+            user_objs = User.objects.filter(email=email)
+            if not user_objs.count():
+                return JsonResponse({
+                    "status": 401,
+                    "message": "Email not found"
+                })
+
+            if user_objs.count() > 1:
+                return JsonResponse({
+                    "status": 410,
+                    "message": "Please report this message to the developer. Multiple accounts found with the same email"
+                })
+
+            user_obj = user_objs.first()
+
+            if not user_obj.check_password(password):
+                return JsonResponse({
+                    "status": 400,
+                    "message": "Bad credentials"
+                })
+
+            token_objs = Token.objects.filter(user=user_obj)
+
+            if not token_objs.count():
+                return JsonResponse({
+                    "status": 401,
+                    "message": "Token not found for the user. Please create a new account."
+                })
+
+            token_obj = token_objs.first()
+
+            return JsonResponse({
+                "status": 200,
+                "message": "Login Success",
+                "token": str(token_obj.key),
+                "username": str(user_obj.username),
+            })
+
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return JsonResponse({
+                "status": 500,
+                "message": str(e),
+            })
+
 
 @csrf_exempt
 @api_view(["POST"])
@@ -256,3 +419,45 @@ def ProcessImageURLView(request):
             return JsonResponse({"status": 200, "message": cleaned_summary_text})
 
         return JsonResponse({"status": 302, "message": "Empty file or empty text detected"})
+
+
+@csrf_exempt
+@api_view(["POST"])
+def GetUserSummaryHistory(request):
+    if request.method == "POST":
+        try:
+            if not request.user.is_authenticated:
+                return JsonResponse({
+                    "status": 400,
+                    "message": "Only allowed for logined users."
+                })
+
+            user_obj = request.user
+            history = []
+
+            history_objs = UserSummaryHistory.objects.filter(
+                uploaded_file__user=user_obj)
+
+            for history_obj in history_objs:
+                image_path = history_obj.uploaded_file.file_path
+
+                if not history_obj.uploaded_file.is_file_uploaded_on_imgbb:
+                    _, file_name = os.path.split(image_path)
+                    image_path = f"/media/{str(history_obj.uploaded_file.uuid)}/{file_name}"
+
+                history.append({
+                    "image_path": image_path,
+                    "image_summary": history_obj.summary_text
+                })
+
+            return JsonResponse({
+                "status": 200,
+                "message": "success",
+                "history": history,
+            })
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return JsonResponse({
+                "status": 500,
+                "message": str(e),
+            })
