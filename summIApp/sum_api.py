@@ -10,7 +10,7 @@ def summarize_text(text):
     try:
         openai.api_key = config("OPENAI_API_KEY")
         response = openai.Completion.create(
-            model="text-ada-001",
+            model="text-davinci-003",
             prompt=f'{text}\n\nTl;dr',
             temperature=0.7,
             max_tokens=60,
