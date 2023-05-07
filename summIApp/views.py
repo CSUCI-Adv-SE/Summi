@@ -305,12 +305,28 @@ def registerView(request):
             user_obj = User.objects.create_user(
                 username=username, email=email, password=password)
 
-            Token.objects.create(user=user_obj)
+            token_objs = Token.objects.create(user=user_obj)
+            
+            if not token_objs.DoesNotExist:
+                return JsonResponse({
+                    "status": 401,
+                    "message": "Token not found for the user. Please create a new account."
+                })
+            
+            # token_obj = token_objs.first()
 
             return JsonResponse({
-                'status': 200,
-                'message': "success. User has been created!",
+                "status": 200,
+                "message": "Login Success",
+                "token": str(token_objs.key),
+                "username": str(user_obj.username),
             })
+
+            # return JsonResponse({
+            #     'status': 200,
+            #     'message': "success. User has been created!",
+            # })
+
         except Exception as e:
             logger.error(traceback.format_exc())
             return JsonResponse({
