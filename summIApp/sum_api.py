@@ -22,4 +22,4 @@ def summarize_text(text):
 
     except Exception as e:
         logger.error(traceback.format_exc())
-        return ""
+        return text
