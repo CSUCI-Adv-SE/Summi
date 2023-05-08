@@ -1,0 +1,62 @@
+2023-04-24 14:06:16,218 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-24 14:08:48,724 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-24 19:38:37,407 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-24 19:38:56,059 django.request WARNING  Not Found: /
+2023-04-24 19:38:56,204 django.request WARNING  Not Found: /apple-touch-icon-precomposed.png
+2023-04-24 19:38:56,209 django.request WARNING  Not Found: /apple-touch-icon.png
+2023-04-24 20:14:28,620 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-24 20:15:03,292 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-24 20:15:18,351 django.request WARNING  Not Found: /
+2023-04-24 20:37:49,734 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-04-24 20:37:49,736 PIL.PngImagePlugin DEBUG    STREAM b'sRGB' 41 1
+2023-04-24 20:37:49,736 PIL.PngImagePlugin DEBUG    STREAM b'gAMA' 54 4
+2023-04-24 20:37:49,736 PIL.PngImagePlugin DEBUG    STREAM b'pHYs' 70 9
+2023-04-24 20:37:49,736 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 91 65445
+2023-04-24 20:37:49,790 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): api.imgbb.com:443
+2023-04-24 20:37:51,282 urllib3.connectionpool DEBUG    https://api.imgbb.com:443 "POST /1/upload?key=b030b6598c34e7a5d3d07702bbc9db09 HTTP/1.1" 200 None
+2023-04-24 20:37:51,327 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): i.ibb.co:443
+2023-04-24 20:37:51,907 urllib3.connectionpool DEBUG    https://i.ibb.co:443 "GET /bH1cXDF/0534fb74d5a9.png HTTP/1.1" 200 292754
+2023-04-24 20:37:54,361 openai       DEBUG    message='Request to OpenAI API' method=post path=https://api.openai.com/v1/completions
+2023-04-24 20:37:54,361 openai       DEBUG    api_version=None data='{"model": "text-ada-001", "prompt": "SU California State University HOUSING RESIDENTIAL EDUCATION CHANNEL ISLANDS\\n\\nTl;dr", "temperature": 0.7, "max_tokens": 60, "top_p": 1.0, "frequency_penalty": 0.0, "presence_penalty": 1}' message='Post details'
+2023-04-24 20:37:54,361 urllib3.util.retry DEBUG    Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2023-04-24 20:37:54,396 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): api.openai.com:443
+2023-04-24 20:37:54,928 urllib3.connectionpool DEBUG    https://api.openai.com:443 "POST /v1/completions HTTP/1.1" 200 None
+2023-04-24 20:37:54,928 openai       DEBUG    message='OpenAI API response' path=https://api.openai.com/v1/completions processing_ms=352 request_id=3025d622bbb026875fce4f1cec994a57 response_code=200
+2023-04-24 20:39:46,348 PIL.TiffImagePlugin DEBUG    tag: Orientation (274) - type: short (3) - value: b'\x00\x01'
+2023-04-24 20:39:46,349 PIL.TiffImagePlugin DEBUG    tag: ExifIFD (34665) - type: long (4) - value: b'\x00\x00\x00&'
+2023-04-24 20:39:46,384 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): api.imgbb.com:443
+2023-04-24 20:39:48,119 urllib3.connectionpool DEBUG    https://api.imgbb.com:443 "POST /1/upload?key=b030b6598c34e7a5d3d07702bbc9db09 HTTP/1.1" 200 None
+2023-04-24 20:39:48,154 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): i.ibb.co:443
+2023-04-24 20:39:48,734 urllib3.connectionpool DEBUG    https://i.ibb.co:443 "GET /HYHJqyP/0cf888cf7a00.jpg HTTP/1.1" 200 282612
+2023-04-24 20:39:49,870 openai       DEBUG    message='Request to OpenAI API' method=post path=https://api.openai.com/v1/completions
+2023-04-24 20:39:49,871 openai       DEBUG    api_version=None data='{"model": "text-ada-001", "prompt": "Code File Edit Selection View Go Debug Terminal Window Help EXPLORER OPEN EDITORS urls py newyear views py newyear X index html newyear templ 6 LECTURE3 newyear migrations templates newyear index html init py admin py anns ny OUTLINE Python 3 7 3 64 bit index html lecture3 urls py views py newyear templates newyear index html 1 index html 40 NORMAL And inside of that I ll create a new file that will be called index html 41 x Spaces 4 UTF 8 LF HTML 4 QE\\n\\nTl;dr", "temperature": 0.7, "max_tokens": 60, "top_p": 1.0, "frequency_penalty": 0.0, "presence_penalty": 1}' message='Post details'
+2023-04-24 20:39:49,871 urllib3.util.retry DEBUG    Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2023-04-24 20:39:49,910 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): api.openai.com:443
+2023-04-24 20:39:50,471 urllib3.connectionpool DEBUG    https://api.openai.com:443 "POST /v1/completions HTTP/1.1" 200 None
+2023-04-24 20:39:50,473 openai       DEBUG    message='OpenAI API response' path=https://api.openai.com/v1/completions processing_ms=431 request_id=9810d6ff7ff0787cadb9d3ccf7f35ad1 response_code=200
+2023-04-24 20:40:07,785 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-04-24 20:40:07,786 PIL.PngImagePlugin DEBUG    STREAM b'sRGB' 41 1
+2023-04-24 20:40:07,786 PIL.PngImagePlugin DEBUG    STREAM b'gAMA' 54 4
+2023-04-24 20:40:07,786 PIL.PngImagePlugin DEBUG    STREAM b'pHYs' 70 9
+2023-04-24 20:40:07,786 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 91 65445
+2023-04-24 20:40:07,828 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): api.imgbb.com:443
+2023-04-24 20:40:09,111 urllib3.connectionpool DEBUG    https://api.imgbb.com:443 "POST /1/upload?key=b030b6598c34e7a5d3d07702bbc9db09 HTTP/1.1" 200 None
+2023-04-24 20:40:09,140 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): i.ibb.co:443
+2023-04-24 20:40:09,182 urllib3.connectionpool DEBUG    https://i.ibb.co:443 "GET /bH1cXDF/0534fb74d5a9.png HTTP/1.1" 200 292754
+2023-04-24 20:40:10,031 openai       DEBUG    message='Request to OpenAI API' method=post path=https://api.openai.com/v1/completions
+2023-04-24 20:40:10,031 openai       DEBUG    api_version=None data='{"model": "text-ada-001", "prompt": "SU California State University HOUSING RESIDENTIAL EDUCATION CHANNEL ISLANDS\\n\\nTl;dr", "temperature": 0.7, "max_tokens": 60, "top_p": 1.0, "frequency_penalty": 0.0, "presence_penalty": 1}' message='Post details'
+2023-04-24 20:40:10,644 urllib3.connectionpool DEBUG    https://api.openai.com:443 "POST /v1/completions HTTP/1.1" 200 None
+2023-04-24 20:40:10,645 openai       DEBUG    message='OpenAI API response' path=https://api.openai.com/v1/completions processing_ms=404 request_id=d3c8c1d153ad27f6693d44eabf26ea78 response_code=200
+2023-04-24 20:40:44,187 PIL.PngImagePlugin DEBUG    STREAM b'IHDR' 16 13
+2023-04-24 20:40:44,188 PIL.PngImagePlugin DEBUG    STREAM b'sRGB' 41 1
+2023-04-24 20:40:44,188 PIL.PngImagePlugin DEBUG    STREAM b'gAMA' 54 4
+2023-04-24 20:40:44,188 PIL.PngImagePlugin DEBUG    STREAM b'pHYs' 70 9
+2023-04-24 20:40:44,188 PIL.PngImagePlugin DEBUG    STREAM b'IDAT' 91 65445
+2023-04-24 20:40:44,227 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): api.imgbb.com:443
+2023-04-24 20:40:45,357 urllib3.connectionpool DEBUG    https://api.imgbb.com:443 "POST /1/upload?key=b030b6598c34e7a5d3d07702bbc9db09 HTTP/1.1" 200 None
+2023-04-24 20:40:45,388 urllib3.connectionpool DEBUG    Starting new HTTPS connection (1): i.ibb.co:443
+2023-04-24 20:40:45,445 urllib3.connectionpool DEBUG    https://i.ibb.co:443 "GET /bH1cXDF/0534fb74d5a9.png HTTP/1.1" 200 292754
+2023-04-24 20:40:46,150 openai       DEBUG    message='Request to OpenAI API' method=post path=https://api.openai.com/v1/completions
+2023-04-24 20:40:46,150 openai       DEBUG    api_version=None data='{"model": "text-ada-001", "prompt": "SU California State University HOUSING RESIDENTIAL EDUCATION CHANNEL ISLANDS\\n\\nTl;dr", "temperature": 0.7, "max_tokens": 60, "top_p": 1.0, "frequency_penalty": 0.0, "presence_penalty": 1}' message='Post details'
+2023-04-24 20:40:46,688 urllib3.connectionpool DEBUG    https://api.openai.com:443 "POST /v1/completions HTTP/1.1" 200 None
+2023-04-24 20:40:46,689 openai       DEBUG    message='OpenAI API response' path=https://api.openai.com/v1/completions processing_ms=374 request_id=d4f10614402f33cadd7fd18ba5660d12 response_code=200

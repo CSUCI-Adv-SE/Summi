@@ -1,22 +1,2 @@
-2023-04-17 19:31:16,709 django.utils.autoreload INFO     Watching for file changes with StatReloader
-2023-04-17 19:45:04,329 django.utils.autoreload INFO     Watching for file changes with StatReloader
-2023-04-17 19:46:50,693 django.utils.autoreload INFO     Watching for file changes with StatReloader
-2023-04-17 20:52:40,130 django.utils.autoreload INFO     Watching for file changes with StatReloader
-2023-04-17 20:52:43,834 django.request WARNING  Not Found: /
-2023-04-17 20:52:43,838 django.request WARNING  Not Found: /
-2023-04-17 20:52:43,949 django.request WARNING  Not Found: /apple-touch-icon-precomposed.png
-2023-04-17 20:52:43,953 django.request WARNING  Not Found: /apple-touch-icon.png
-2023-04-17 20:52:43,957 django.request WARNING  Not Found: /favicon.ico
-2023-04-17 20:52:43,966 django.request WARNING  Not Found: /apple-touch-icon-precomposed.png
-2023-04-17 20:52:43,975 django.request WARNING  Not Found: /apple-touch-icon.png
-2023-04-17 20:52:43,985 django.request WARNING  Not Found: /favicon.ico
-2023-04-17 20:52:43,999 django.request WARNING  Not Found: /
-2023-04-17 20:52:44,015 django.request WARNING  Not Found: /apple-touch-icon-precomposed.png
-2023-04-17 20:52:44,024 django.request WARNING  Not Found: /apple-touch-icon.png
-2023-04-17 20:52:44,028 django.request WARNING  Not Found: /favicon.ico
-2023-04-17 20:52:44,032 django.request WARNING  Not Found: /apple-touch-icon-precomposed.png
-2023-04-17 20:52:44,037 django.request WARNING  Not Found: /apple-touch-icon.png
-2023-04-17 20:52:44,042 django.request WARNING  Not Found: /favicon.ico
-2023-04-17 20:52:44,064 django.request WARNING  Not Found: /apple-touch-icon-precomposed.png
-2023-04-17 20:52:44,069 django.request WARNING  Not Found: /favicon.ico
-2023-04-17 20:52:44,072 django.request WARNING  Not Found: /apple-touch-icon.png
+2023-04-29 16:46:57,873 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-29 16:50:27,251 django.utils.autoreload INFO     Watching for file changes with StatReloader
