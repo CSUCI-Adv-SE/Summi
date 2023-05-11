@@ -305,12 +305,15 @@ def registerView(request):
             user_obj = User.objects.create_user(
                 username=username, email=email, password=password)
 
-            Token.objects.create(user=user_obj)
+            token_obj = Token.objects.create(user=user_obj)
 
             return JsonResponse({
-                'status': 200,
-                'message': "success. User has been created!",
+                "status": 200,
+                "message": "User has been created!",
+                "token": str(token_obj.key),
+                "username": str(user_obj.username),
             })
+
         except Exception as e:
             logger.error(traceback.format_exc())
             return JsonResponse({
