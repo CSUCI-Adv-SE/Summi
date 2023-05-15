@@ -26,6 +26,11 @@ class UserSummaryHistory(models.Model):
     summary_text = models.TextField(
         default="", help_text="Summary for the image")
 
+
 class SummIConfig(models.Model):
-    USE_OCR_APIs = models.BooleanField(default=True, help_text="Use google OCR APIs?")
-    SAVE_UPLOADED_IMAGES_LOCALLY = models.BooleanField(default=False, help_text="Save User uploaded images to local disk?")
+    USE_OCR_APIs = models.BooleanField(
+        default=True, help_text="Use google OCR APIs?")
+    SAVE_UPLOADED_IMAGES_LOCALLY = models.BooleanField(
+        default=False, help_text="Save User uploaded images to local disk?")
+    USE_OPENAI_API = models.BooleanField(
+        default=False, help_text="Use OpenAI APIs?")

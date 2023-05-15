@@ -9,6 +9,8 @@ from .ocr_model.summi_ocr import recognize_text
 from .ocr_api import recognize_text_api
 import shutil
 from .models import SummIConfig
+from .sum_api import *
+from .summarizer import *
 
 logger = logging.getLogger("django")
 
@@ -70,3 +72,19 @@ def remove_directory(file_path):
         shutil.rmtree(file_path)
     except Exception as e:
         logger.error(traceback.format_exc())
+
+
+def summerizer_wrapper(text):
+    try:
+        summi_config_objs = SummIConfig.objects.all()
+
+        if summi_config_objs.count() == 0:
+            SummIConfig.objects.create()
+
+        if SummIConfig.objects.last().USE_OPENAI_API:
+            return summarize_text(text)
+        else:
+            return summarizer_text_local(text)
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return text
