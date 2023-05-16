@@ -12,7 +12,6 @@ from PIL import Image
 import re
 from urllib.request import urlretrieve
 import tempfile
-from .sum_api import *
 from .imgbb.upload_file import imgbb_upload
 from .imgbb.download_file import imgbb_download_file
 from rest_framework.authtoken.models import Token
@@ -215,7 +214,7 @@ def GetSummarisedTextView(request):
 
             detected_text = recognize_text_wrapper(file_path)
             cleaned_detected_text = re.sub('[^A-Za-z0-9]+', ' ', detected_text)
-            summary_text = summarize_text(cleaned_detected_text)
+            summary_text = summerizer_wrapper(cleaned_detected_text)
             cleaned_summary_text = re.sub('[^A-Za-z0-9]+', ' ', summary_text)
 
             if request.user.is_authenticated:
@@ -305,12 +304,15 @@ def registerView(request):
             user_obj = User.objects.create_user(
                 username=username, email=email, password=password)
 
-            Token.objects.create(user=user_obj)
+            token_obj = Token.objects.create(user=user_obj)
 
             return JsonResponse({
-                'status': 200,
-                'message': "success. User has been created!",
+                "status": 200,
+                "message": "User has been created!",
+                "token": str(token_obj.key),
+                "username": str(user_obj.username),
             })
+
         except Exception as e:
             logger.error(traceback.format_exc())
             return JsonResponse({
